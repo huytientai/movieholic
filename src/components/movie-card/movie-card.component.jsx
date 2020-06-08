@@ -1,0 +1,20 @@
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+
+import { baseUrl } from '../../data/movie.urls';
+
+import './movie-card.styles.scss';
+
+const MovieCard = ({ id, poster_path, title, release_date, history }) => {
+  const posterSize = '/w200'; // 200px
+
+  return (
+    <div className='movie-card' onClick={() => history.push(`/movies/${id}`)}>
+      <img src={`${baseUrl}${posterSize}${poster_path}`} alt='movie-poster' />
+      <span className='title'>{title}</span>
+      <span className='release-date'>{release_date}</span>
+    </div>
+  );
+};
+
+export default withRouter(MovieCard);
