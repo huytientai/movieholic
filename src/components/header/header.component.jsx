@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
 import SearchBox from '../search-box/search-box.component';
 
 import { createStructuredSelector } from 'reselect';
@@ -24,7 +23,6 @@ const Header = ({ currentUser, history }) => (
     <Link to='/'>
       <Logo className='logo-container' />
     </Link>
-
     <SearchBox />
     <OptionsContainer>
       {currentUser ? (

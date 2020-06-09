@@ -2,15 +2,23 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
-import './footer.styles.scss';
+import Logo from '../../assets/icons/cropped-logo.png';
 
-const Footer = () => 
-	<div className="footer-container">
-		<Link to='/'>
-      		<Logo className='logo-container' />
-    	</Link>
-    	<p>Watch your favorite movie</p>
-    </div>;
+import {
+  FooterContainer,
+  FooterLogoContainer,
+  FooterDescription
+} from './footer.styles';
+
+const Footer = () => (
+  <FooterContainer>
+    <Link to='/'>
+      <FooterLogoContainer src={Logo} alt='logo' />
+    </Link>
+    <FooterDescription>
+      Create by HEDSPi students with &hearts;
+    </FooterDescription>
+  </FooterContainer>
+);
 
 export default Footer;

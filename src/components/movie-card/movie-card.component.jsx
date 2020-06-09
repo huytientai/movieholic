@@ -11,8 +11,10 @@ const MovieCard = ({ id, poster_path, title, release_date, history }) => {
   return (
     <div className='movie-card' onClick={() => history.push(`/movies/${id}`)}>
       <img src={`${baseUrl}${posterSize}${poster_path}`} alt='movie-poster' />
-      <span className='title'>{title.length <20 ? title : title.slice(0,20) + '...'}</span>
-      <span className='release-date'>{release_date}</span>
+      <span className='title'>
+        {title.length < 20 ? title : title.slice(0, 20) + '...'}
+      </span>
+      <span className='release-date'>{release_date.slice(0, 4)}</span>
     </div>
   );
 };
