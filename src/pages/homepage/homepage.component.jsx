@@ -18,7 +18,7 @@ const HomePage = ({ isLoaded, fetchMoviesStart }) => {
     <div className='home-page'>
       <IntroSection />
       <MovieCardListContainer />
-      <SearchBox/>
+    <SearchBox/>
     </div>
   );
 };

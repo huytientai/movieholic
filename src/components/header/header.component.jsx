@@ -2,6 +2,9 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+
+import SearchBox from '../search-box/search-box.component';
+
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
@@ -21,6 +24,8 @@ const Header = ({ currentUser, history }) => (
     <Link to='/'>
       <Logo className='logo-container' />
     </Link>
+
+    <SearchBox />
     <OptionsContainer>
       {currentUser ? (
         currentUser.isAdmin ? (
