@@ -6,7 +6,7 @@ import './profile-avatar-container.styles.scss';
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
+
 
 //Tabs
 import { withStyles } from "@material-ui/core/styles";
@@ -59,13 +59,14 @@ class ProfileAvatarContainer extends React.Component {
   };
 
   renderUploadedState() {
-    const { classes, theme } = this.props;
-    const { value } = this.state;
+    const { classes} = this.props;
+    
 
     return (
       <Grid container direction="column" alignItems="center">
         <Grid item >
           <img
+            alt="avatar"
             width="100%"
             className={classes.img}
             src={this.state.selectedFile}
@@ -89,11 +90,11 @@ class ProfileAvatarContainer extends React.Component {
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes} = this.props;
     return (
       <div className={classes.root}>
         <Card className={this.props.cardName}>
-          {this.state.mainState == "uploaded" && this.renderUploadedState()}
+          {this.state.mainState === "uploaded" && this.renderUploadedState()}
         </Card>
       </div>
     );

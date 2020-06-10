@@ -1,9 +1,6 @@
 import React from 'react';
 
-import ProfileInputForm from '../../components/profile-input-form/profile-input-form.component';
 import ProfileAvatarContainer from '../../components/profile-avatar-container/profile-avatar-container.component';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { createStructuredSelector } from 'reselect';
 import './user-profile.styles.scss';
 
 
@@ -11,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import ButtonBase from "@material-ui/core/ButtonBase";
+
 
 
 const useStyles = makeStyles(theme => ({
