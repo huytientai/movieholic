@@ -6,6 +6,7 @@ import { signUpStart } from '../../redux/user/user.actions';
 import CustomButton from '../custom-button/custom-button.component';
 
 import { SignUpContainer, SignUpTitle } from './sign-up.styles';
+import Input from '@material-ui/core/Input';
 
 const SignUp = ({ signUpStart }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -44,7 +45,11 @@ const SignUp = ({ signUpStart }) => {
   return (
     <SignUpContainer>
       <SignUpTitle>I do not have an account</SignUpTitle>
-      <span>Sign up with your email and password.</span>
+      <span>Sign up with your email and password.</span> <br/><br/>
+      <Input placeholder="Email" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
+      <Input placeholder="Display name" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
+      <Input placeholder="Password" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
+      <Input placeholder="Confirm password" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
       <CustomButton>SIGN UP</CustomButton>
     </SignUpContainer>
   );
