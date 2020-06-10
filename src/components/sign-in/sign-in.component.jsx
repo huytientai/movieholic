@@ -14,6 +14,8 @@ import { IconButton, SvgIcon } from '@material-ui/core';
 import { ReactComponent as FacebookLogo } from '../../assets/icons/facebook-logo.svg';
 import { ReactComponent as GoogleLogo } from '../../assets/icons/google-logo.svg';
 
+import Input from '@material-ui/core/Input';
+
 import {
   SignInContainer,
   SignInTitle,
@@ -50,7 +52,9 @@ const SignIn = ({
   return (
     <SignInContainer>
       <SignInTitle>I already have an account</SignInTitle>
-      <span>Sign in with your email and password.</span>
+      <span>Sign in with your email and password.</span> <br/> <br/>
+      <Input placeholder="Email" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
+      <Input placeholder="Password" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
       <ButtonsBarContainer>
         <CustomButton>SIGN IN</CustomButton>
         <SignInOptionsDescription>or sign in with</SignInOptionsDescription>
