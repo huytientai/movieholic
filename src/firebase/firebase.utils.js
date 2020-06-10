@@ -72,6 +72,8 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
 
     batch.set(newReviewDocRef, {
       userId: 'JqQIlnctKDMumwduNy9mnq4lhju2',
+      displayName: 'Long Nguyễn',
+      photoURL: 'https://graph.facebook.com/1632165466941231/picture',
       comment: 'This is an awesome movie !',
       ratings: 8.5,
       spoil: false,
