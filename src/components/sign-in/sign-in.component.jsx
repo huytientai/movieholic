@@ -9,12 +9,11 @@ import {
 
 import CustomButton from '../custom-button/custom-button.component';
 
+import { TextField } from '@material-ui/core';
 import { IconButton, SvgIcon } from '@material-ui/core';
 
 import { ReactComponent as FacebookLogo } from '../../assets/icons/facebook-logo.svg';
 import { ReactComponent as GoogleLogo } from '../../assets/icons/google-logo.svg';
-
-import Input from '@material-ui/core/Input';
 
 import {
   SignInContainer,
@@ -52,25 +51,46 @@ const SignIn = ({
   return (
     <SignInContainer>
       <SignInTitle>I already have an account</SignInTitle>
-      <span>Sign in with your email and password.</span> <br/> <br/>
-      <Input placeholder="Email" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
-      <Input placeholder="Password" inputProps={{ 'aria-label': 'description' }} /> <br/> <br/>
-      <ButtonsBarContainer>
-        <CustomButton>SIGN IN</CustomButton>
-        <SignInOptionsDescription>or sign in with</SignInOptionsDescription>
-        <IconGroup>
-          <IconButton size='small' onClick={facebookSignInStart}>
-            <SvgIcon fontSize='large'>
-              <FacebookLogo />
-            </SvgIcon>
-          </IconButton>
-          <IconButton size='small' onClick={googleSignInStart}>
-            <SvgIcon fontSize='large'>
-              <GoogleLogo />
-            </SvgIcon>
-          </IconButton>
-        </IconGroup>
-      </ButtonsBarContainer>
+      <span>Sign in with your email and password.</span>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          required
+          name='email'
+          type='email'
+          value={email}
+          onChange={handleChange}
+          label='Email'
+          margin='normal'
+          fullWidth
+        />
+        <TextField
+          required
+          name='password'
+          type='password'
+          value={password}
+          onChange={handleChange}
+          label='Password'
+          margin='normal'
+          fullWidth
+        />
+
+        <ButtonsBarContainer>
+          <CustomButton>SIGN IN</CustomButton>
+          <SignInOptionsDescription>or sign in with</SignInOptionsDescription>
+          <IconGroup>
+            <IconButton size='small' onClick={facebookSignInStart}>
+              <SvgIcon fontSize='large'>
+                <FacebookLogo />
+              </SvgIcon>
+            </IconButton>
+            <IconButton size='small' onClick={googleSignInStart}>
+              <SvgIcon fontSize='large'>
+                <GoogleLogo />
+              </SvgIcon>
+            </IconButton>
+          </IconGroup>
+        </ButtonsBarContainer>
+      </form>
     </SignInContainer>
   );
 };

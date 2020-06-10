@@ -16,6 +16,10 @@ export const SignInOptionsDescription = styled.span`
   color: dimgray;
 `;
 
+export const FormInput = styled.div`
+  width: 100%;
+`;
+
 export const IconGroup = styled.div`
   width: 23%;
   display: flex;
@@ -24,6 +28,7 @@ export const IconGroup = styled.div`
 `;
 
 export const ButtonsBarContainer = styled.div`
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
