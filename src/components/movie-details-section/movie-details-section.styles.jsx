@@ -20,19 +20,19 @@ export const Backdrop = styled.div`
   filter: brightness(0.45);
 `;
 
-export const Poster = styled.img`
-  border-radius: 10px;
-`;
-
 export const Details = styled.div`
   height: 85%;
   width: 95%;
   padding: 0 25px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   position: absolute;
   color: white;
+`;
+
+export const Poster = styled.img`
+  border-radius: 10px;
 `;
 
 export const Description = styled.div`
