@@ -10,7 +10,7 @@ import { TextField } from '@material-ui/core';
 import {
   SignUpContainer,
   SignUpTitle,
-  ButtonsBarContainer
+  ButtonsGroupContainer
 } from './sign-up.styles';
 
 const SignUp = ({ signUpStart }) => {
@@ -92,9 +92,9 @@ const SignUp = ({ signUpStart }) => {
           margin='normal'
           fullWidth
         />
-        <ButtonsBarContainer>
+        <ButtonsGroupContainer>
           <CustomButton>SIGN UP</CustomButton>
-        </ButtonsBarContainer>
+        </ButtonsGroupContainer>
       </form>
     </SignUpContainer>
   );

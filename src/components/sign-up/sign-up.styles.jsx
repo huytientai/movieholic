@@ -10,6 +10,6 @@ export const SignUpTitle = styled.h2`
   margin: 10px 0;
 `;
 
-export const ButtonsBarContainer = styled.div`
+export const ButtonsGroupContainer = styled.div`
   margin-top: 30px;
 `;

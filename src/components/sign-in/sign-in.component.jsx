@@ -19,7 +19,7 @@ import {
   SignInContainer,
   SignInTitle,
   SignInOptionsDescription,
-  ButtonsBarContainer,
+  ButtonsGroupContainer,
   IconGroup
 } from './sign-in.styles';
 
@@ -74,7 +74,7 @@ const SignIn = ({
           fullWidth
         />
 
-        <ButtonsBarContainer>
+        <ButtonsGroupContainer>
           <CustomButton>SIGN IN</CustomButton>
           <SignInOptionsDescription>or sign in with</SignInOptionsDescription>
           <IconGroup>
@@ -89,7 +89,7 @@ const SignIn = ({
               </SvgIcon>
             </IconButton>
           </IconGroup>
-        </ButtonsBarContainer>
+        </ButtonsGroupContainer>
       </form>
     </SignInContainer>
   );
