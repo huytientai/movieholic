@@ -25,6 +25,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     const { displayName, email, photoURL } = userAuth;
     const isAdmin = false;
+    const firstName = '';
+    const lastName = '';
+    const phoneNumber = '';
+    const gender = '';
+    const age = '';
     const createdAt = new Date();
 
     try {
@@ -33,6 +38,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         photoURL,
         isAdmin,
+        firstName,
+        lastName,
+        phoneNumber,
+        gender,
+        age,
         createdAt,
         ...additionalData
       });
