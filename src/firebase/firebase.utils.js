@@ -74,11 +74,11 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
   const batch = firestore.batch();
 
   movieIds.forEach(movieId => {
-    const movieReviewDocRef = firestore.doc(
-      `movieReviews/${movieId.toString()}`
-    );
-    const newCollectionRef = movieReviewDocRef.collection('reviews');
-    const newReviewDocRef = newCollectionRef.doc();
+    const newReviewDocRef = firestore
+      .collection('movieReviews')
+      .doc(movieId.toString())
+      .collection('reviews')
+      .doc();
 
     batch.set(newReviewDocRef, {
       userId: 'JqQIlnctKDMumwduNy9mnq4lhju2',
@@ -100,6 +100,55 @@ export const getMovieCollections = snapshot =>
 
 export const getReviewCollections = snapshot =>
   snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+export const createReview = async (movieId, review) => {
+  const newReviewRef = firestore
+    .collection('movieReviews')
+    .doc(movieId.toString())
+    .collection('reviews')
+    .doc();
+
+  try {
+    await newReviewRef.set({
+      ...review,
+      createdAt: new Date(),
+      editedAt: new Date()
+    });
+  } catch (error) {
+    console.log('Error creating review.', error.message);
+  }
+};
+
+export const updateReview = async (movieId, review) => {
+  const { id, comment, ratings } = review;
+
+  const reviewRef = firestore.doc(`movieReviews/${movieId}/reviews/${id}`);
+
+  try {
+    await reviewRef.set(
+      {
+        comment,
+        ratings,
+        editedAt: new Date()
+      },
+      { merge: true }
+    );
+  } catch (error) {
+    console.log('Error editing review.', error.message);
+  }
+};
+
+export const deleteReview = async (movieId, reviewId) => {
+  const reviewRef = firestore.doc(
+    `movieReviews/${movieId}/reviews/${reviewId}`
+  );
+
+  try {
+    await reviewRef.delete();
+  } catch (error) {
+    console.log('Error editing review.', error.message);
+  }
+};
 
 export const convertMoviesSnapshotToMap = movies => {
   const transformedCollections = movies.docs.map(doc => doc.data());
