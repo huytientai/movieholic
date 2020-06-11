@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { IconButton } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
@@ -6,10 +6,10 @@ import { PhotoCamera } from '@material-ui/icons';
 import {
   ProfileAvatarContainer,
   ProfileAvatarTitle,
+  UserAvatarAndUploadButton,
   UserAvatar,
   FileInput
 } from './profile-avatar.styles';
-import { useState } from 'react';
 
 const ProfileAvatar = ({ currentUser }) => {
   const { photoURL } = currentUser;
@@ -30,21 +30,23 @@ const ProfileAvatar = ({ currentUser }) => {
   return (
     <ProfileAvatarContainer>
       <ProfileAvatarTitle>Avatar</ProfileAvatarTitle>
-      <UserAvatar
-        style={{ backgroundImage: `url(${selectedFile})` }}
-      ></UserAvatar>
-      <FileInput
-        id='upload-button'
-        name='avatarUrl'
-        type='file'
-        accept='image/*'
-        onChange={handleUploadClick}
-      />
-      <label htmlFor='upload-button'>
-        <IconButton component='span'>
-          <PhotoCamera />
-        </IconButton>
-      </label>
+      <UserAvatarAndUploadButton>
+        <UserAvatar
+          style={{ backgroundImage: `url(${selectedFile})` }}
+        ></UserAvatar>
+        <FileInput
+          id='upload-button'
+          name='avatarUrl'
+          type='file'
+          accept='image/*'
+          onChange={handleUploadClick}
+        />
+        <label htmlFor='upload-button'>
+          <IconButton component='span'>
+            <PhotoCamera />
+          </IconButton>
+        </label>
+      </UserAvatarAndUploadButton>
     </ProfileAvatarContainer>
   );
 };

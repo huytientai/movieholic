@@ -19,14 +19,7 @@ import {
 } from './profile-input-form.styles';
 
 const ProfileInputForm = ({ currentUser }) => {
-  const [userInfo, setUserInfo] = useState({
-    displayName: currentUser.displayName,
-    firstName: currentUser.firstName ? currentUser.firstName : '',
-    lastName: currentUser.lastName ? currentUser.lastName : '',
-    phoneNumber: currentUser.phoneNumber ? currentUser.phoneNumber : '',
-    gender: currentUser.gender ? currentUser.gender : '',
-    age: currentUser.age ? currentUser.age : 0
-  });
+  const [userInfo, setUserInfo] = useState(currentUser);
 
   const {
     displayName,
@@ -50,6 +43,16 @@ const ProfileInputForm = ({ currentUser }) => {
     <ProfileInputFormContainer>
       <ProfileInputFormTitle>Profile</ProfileInputFormTitle>
       <form onSubmit={handleSubmit}>
+        <TextField
+          name='email'
+          type='email'
+          value={currentUser.email}
+          onChange={handleChange}
+          label='Email'
+          margin='normal'
+          fullWidth
+          disabled
+        />
         <TextField
           required
           name='displayName'
@@ -78,16 +81,7 @@ const ProfileInputForm = ({ currentUser }) => {
             margin='normal'
           />
         </FirstNameAndLastNameInput>
-        <TextField
-          name='email'
-          type='email'
-          value={currentUser.email}
-          onChange={handleChange}
-          label='Email'
-          margin='normal'
-          fullWidth
-          disabled
-        />
+
         <TextField
           name='phoneNumber'
           type='text'
