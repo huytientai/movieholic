@@ -9,8 +9,7 @@ import { fetchMoviesStart } from '../../redux/movie/movie.actions';
 
 import { baseUrl } from '../../data/movie.urls';
 
-import Rating from '@material-ui/lab/Rating';
-
+import { Star } from '@material-ui/icons';
 
 import {
   MovieDetailsSectionContainer,
@@ -72,7 +71,9 @@ const MovieDetailsSection = ({ isLoaded, fetchMoviesStart, movie }) => {
               <Duration>{runtime} mins</Duration>
             </GenresAndDuration>
             <RatingsAverage>
-            <Rating name="read-only" max={10} precision={0.1} defaultValue={Math.round(vote_average*10)/10} readOnly size="large"/>
+              <Star
+                style={{ color: 'yellow', fontSize: 32, paddingRight: 10 }}
+              />
               {vote_average}
             </RatingsAverage>
             <Tagline>{tagline}</Tagline>
