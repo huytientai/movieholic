@@ -1,7 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import './profile-input-form.styles.scss';
+import {
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from '@material-ui/core';
 
-const ProfileInputForm = () => <div></div>;
+import CustomButton from '../custom-button/custom-button.component';
+
+import {
+  ProfileInputFormContainer,
+  ProfileInputFormTitle,
+  FirstNameAndLastNameInput,
+  AgeAndGenderInput,
+  ButtonsGroupContainer
+} from './profile-input-form.styles';
+
+const ProfileInputForm = ({ currentUser }) => {
+  const [userInfo, setUserInfo] = useState({
+    displayName: currentUser.displayName,
+    firstName: currentUser.firstName ? currentUser.firstName : '',
+    lastName: currentUser.lastName ? currentUser.lastName : '',
+    phoneNumber: currentUser.phoneNumber ? currentUser.phoneNumber : '',
+    gender: currentUser.gender ? currentUser.gender : '',
+    age: currentUser.age ? currentUser.age : 0
+  });
+
+  const {
+    displayName,
+    firstName,
+    lastName,
+    phoneNumber,
+    gender,
+    age
+  } = userInfo;
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+  };
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  return (
+    <ProfileInputFormContainer>
+      <ProfileInputFormTitle>Profile</ProfileInputFormTitle>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          required
+          name='displayName'
+          type='text'
+          value={displayName}
+          onChange={handleChange}
+          label='Display name'
+          margin='normal'
+          fullWidth
+        />
+        <FirstNameAndLastNameInput>
+          <TextField
+            name='firstName'
+            type='text'
+            value={firstName}
+            onChange={handleChange}
+            label='First name'
+            margin='normal'
+          />
+          <TextField
+            name='lastName'
+            type='text'
+            value={lastName}
+            onChange={handleChange}
+            label='Last name'
+            margin='normal'
+          />
+        </FirstNameAndLastNameInput>
+        <TextField
+          name='email'
+          type='email'
+          value={currentUser.email}
+          onChange={handleChange}
+          label='Email'
+          margin='normal'
+          fullWidth
+          disabled
+        />
+        <TextField
+          name='phoneNumber'
+          type='text'
+          value={phoneNumber}
+          onChange={handleChange}
+          label='Phone number'
+          margin='normal'
+        />
+        <AgeAndGenderInput>
+          <TextField
+            name='age'
+            type='number'
+            value={age}
+            onChange={handleChange}
+            label='Age'
+            margin='normal'
+          />
+          <FormControl margin='normal' style={{ minWidth: 120 }}>
+            <InputLabel>Gender</InputLabel>
+            <Select name='gender' value={gender} onChange={handleChange}>
+              <MenuItem value={''}>
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={'male'}>Male</MenuItem>
+              <MenuItem value={'female'}>Female</MenuItem>
+              <MenuItem value={'other'}>Other</MenuItem>
+            </Select>
+          </FormControl>
+        </AgeAndGenderInput>
+        <ButtonsGroupContainer>
+          <CustomButton>SAVE</CustomButton>
+        </ButtonsGroupContainer>
+      </form>
+    </ProfileInputFormContainer>
+  );
+};
 
 export default ProfileInputForm;
