@@ -5,19 +5,18 @@ import { createStructuredSelector } from 'reselect';
 
 import { fetchReviewsStart } from '../../redux/review/review.actions';
 import {
-  selectReviews,
-  selectIsReviewsLoaded
+  selectMovieId,
+  selectReviews
 } from '../../redux/review/review.selectors';
 
 import Review from '../review/review.component';
 
 import './review-list.styles.scss';
 
-const ReviewList = ({ isLoaded, match, reviews, fetchReviewsStart }) => {
-  const { movieId } = match.params;
-
+const ReviewList = ({ movieId, match, reviews, fetchReviewsStart }) => {
   useEffect(() => {
-    if (!isLoaded) fetchReviewsStart(movieId);
+    if (movieId !== match.params.movieId)
+      fetchReviewsStart(match.params.movieId);
   });
 
   return (
@@ -31,7 +30,7 @@ const ReviewList = ({ isLoaded, match, reviews, fetchReviewsStart }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLoaded: selectIsReviewsLoaded,
+  movieId: selectMovieId,
   reviews: selectReviews
 });
 

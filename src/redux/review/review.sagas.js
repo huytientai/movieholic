@@ -13,7 +13,7 @@ export function* fetchReviewsAsync({ payload }) {
     );
     const snapshot = yield collectionRef.get();
     const reviews = yield call(getReviewCollections, snapshot);
-    yield put(fetchReviewsSuccess(reviews));
+    yield put(fetchReviewsSuccess(payload, reviews));
   } catch (error) {
     yield put(fetchReviewsFailure(error.message));
   }

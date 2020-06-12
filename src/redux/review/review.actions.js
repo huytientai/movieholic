@@ -5,9 +5,9 @@ export const fetchReviewsStart = movieId => ({
   payload: movieId
 });
 
-export const fetchReviewsSuccess = reviews => ({
+export const fetchReviewsSuccess = (movieId, reviews) => ({
   type: ReviewActionTypes.FETCH_REVIEWS_SUCCESS,
-  payload: reviews
+  payload: { movieId, reviews }
 });
 
 export const fetchReviewsFailure = errorMessage => ({

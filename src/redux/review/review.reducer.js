@@ -1,6 +1,7 @@
 import ReviewActionTypes from './review.types';
 
 const INITIAL_STATE = {
+  movieId: undefined,
   reviews: null,
   isFetching: false,
   errorMessage: undefined
@@ -17,8 +18,9 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
     case ReviewActionTypes.FETCH_REVIEWS_SUCCESS:
       return {
         ...state,
+        movieId: action.payload.movieId,
         isFetching: false,
-        reviews: action.payload
+        reviews: action.payload.reviews
       };
 
     case ReviewActionTypes.FETCH_REVIEWS_FAILURE:
