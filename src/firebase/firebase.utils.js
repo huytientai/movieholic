@@ -124,17 +124,21 @@ export const updateReview = async (movieId, review) => {
 
   const reviewRef = firestore.doc(`movieReviews/${movieId}/reviews/${id}`);
 
-  try {
-    await reviewRef.set(
-      {
-        comment,
-        ratings,
-        editedAt: new Date()
-      },
-      { merge: true }
-    );
-  } catch (error) {
-    console.log('Error editing review.', error.message);
+  const snapShot = await reviewRef.get();
+
+  if (snapShot.exists) {
+    try {
+      await reviewRef.set(
+        {
+          comment,
+          ratings,
+          editedAt: new Date()
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.log('Error editing review.', error.message);
+    }
   }
 };
 
