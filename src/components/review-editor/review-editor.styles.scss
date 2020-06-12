@@ -1,0 +1,24 @@
+.review-editor {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .comment-box {
+    min-width: 50%;
+    min-height: 100px;
+    border-radius: 5px;
+    font-family: 'Roboto';
+    font-size: initial;
+    line-height: 1.5;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    resize: vertical;
+  }
+
+  .ratings-and-post-button {
+    height: 9vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
