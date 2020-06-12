@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-import Rating from '@material-ui/lab/Rating';
-import Button from '@material-ui/core/Button';
+import { Rating } from '@material-ui/lab';
+import { Button } from '@material-ui/core';
 
 import './review-editor.styles.scss';
 
 const ReviewEditor = ({ currentUser }) => {
   const [comment, setComment] = useState('');
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { value } = event.target;
 
     setComment(value);
