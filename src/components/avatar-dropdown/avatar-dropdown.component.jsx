@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
@@ -10,7 +10,9 @@ import { Menu, MenuItem, IconButton, Avatar } from '@material-ui/core';
 
 import './avatar-dropdown.styles.scss';
 
-const AvatarDropdown = ({ currentUser, signOutStart, history }) => {
+const AvatarDropdown = ({ currentUser, signOutStart }) => {
+  const history = useHistory();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -53,6 +55,4 @@ const mapDispatchToProps = dispatch => ({
   signOutStart: () => dispatch(signOutStart())
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AvatarDropdown)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(AvatarDropdown);

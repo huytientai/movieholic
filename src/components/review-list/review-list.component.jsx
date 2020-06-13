@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -11,12 +11,11 @@ import {
 
 import Review from '../review/review.component';
 
-import './review-list.styles.scss';
+const ReviewList = ({ fetchedMovieId, reviews, fetchReviewsStart }) => {
+  const { movieId } = useParams();
 
-const ReviewList = ({ movieId, match, reviews, fetchReviewsStart }) => {
   useEffect(() => {
-    if (movieId !== match.params.movieId)
-      fetchReviewsStart(match.params.movieId);
+    if (fetchedMovieId !== movieId) fetchReviewsStart(movieId);
   });
 
   return (
@@ -30,7 +29,7 @@ const ReviewList = ({ movieId, match, reviews, fetchReviewsStart }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  movieId: selectMovieId,
+  fetchedMovieId: selectMovieId,
   reviews: selectReviews
 });
 
@@ -38,6 +37,4 @@ const mapDispatchToProps = dispatch => ({
   fetchReviewsStart: movieId => dispatch(fetchReviewsStart(movieId))
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ReviewList)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewList);

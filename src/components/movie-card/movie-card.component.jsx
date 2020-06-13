@@ -1,11 +1,13 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { baseUrl } from '../../data/movie.urls';
 
 import './movie-card.styles.scss';
 
-const MovieCard = ({ id, poster_path, title, release_date, history }) => {
+const MovieCard = ({ id, poster_path, title, release_date }) => {
+  const history = useHistory();
+
   const posterSize = '/w200'; // 200px
 
   return (
@@ -19,4 +21,4 @@ const MovieCard = ({ id, poster_path, title, release_date, history }) => {
   );
 };
 
-export default withRouter(MovieCard);
+export default MovieCard;

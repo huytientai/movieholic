@@ -7,8 +7,9 @@ export const selectMovieId = createSelector(
   review => review.movieId
 );
 
-export const selectReviews = createSelector([selectReview], review =>
-  review.reviews ? review.reviews : []
+export const selectReviews = createSelector(
+  [selectReview],
+  review => review.reviews
 );
 
 export const selectIsReviewsFetching = createSelector(

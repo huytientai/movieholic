@@ -2,7 +2,7 @@ import ReviewActionTypes from './review.types';
 
 const INITIAL_STATE = {
   movieId: undefined,
-  reviews: null,
+  reviews: [],
   isFetching: false,
   errorMessage: undefined
 };
