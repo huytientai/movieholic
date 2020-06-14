@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import './search-dropdown.styles.scss';
+import "./search-dropdown.styles.scss";
 
-const SearchDropdown = () => <div></div>;
+const SearchDropdown = (item) => (
+  <div class="autocomplete-item">{item.title}</div>
+);
 
 export default SearchDropdown;
