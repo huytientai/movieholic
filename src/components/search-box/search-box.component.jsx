@@ -21,6 +21,7 @@ export default function SearchBox() {
       setResults([]);
       return false;
     }
+    let input = event.target.value;
 
     let array = [];
 
@@ -31,13 +32,18 @@ export default function SearchBox() {
         querySnapshot.forEach(function (doc) {
           array.push(doc.data());
         });
+
+        array = array
+          .map((item) => {
+            if (item.title.search(input) !== -1) return item;
+            else return null;
+          })
+          .filter(Boolean);
+
+        setResults(array);
       });
 
-    setResults(array);
     setShow(true);
-
-    // console.log(show);
-    // console.log(results);
   }
 
   function useOutside(ref) {
