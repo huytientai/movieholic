@@ -35,10 +35,12 @@ export default function SearchBox() {
 
         array = array
           .map((item) => {
-            if (item.title.search(input) !== -1) return item;
+            if (item.title.toLowerCase().search(input.toLowerCase()) !== -1)
+              return item;
             else return null;
           })
-          .filter(Boolean);
+          .filter(Boolean)
+          .slice(0, 10);
 
         setResults(array);
       });
@@ -50,7 +52,7 @@ export default function SearchBox() {
     useEffect(() => {
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          if (show) setShow(false);
+          setShow(false);
         }
       }
 
