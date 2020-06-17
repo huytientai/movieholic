@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { uploadAvatarStart } from '../../redux/user/user.actions';
 
 import { IconButton } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
@@ -11,20 +16,13 @@ import {
   FileInput
 } from './profile-avatar.styles';
 
-const ProfileAvatar = ({ currentUser }) => {
-  const { photoURL } = currentUser;
-
-  const [selectedFile, setSelectedFile] = useState(photoURL);
+const ProfileAvatar = ({ currentUser, uploadAvatarStart }) => {
+  const { id, photoURL } = currentUser;
 
   const handleUploadClick = event => {
     const file = event.target.files[0];
-    const reader = new FileReader();
 
-    reader.onloadend = () => setSelectedFile([reader.result]);
-
-    reader.readAsDataURL(file);
-
-    setSelectedFile(event.target.files[0]);
+    uploadAvatarStart(id, file);
   };
 
   return (
@@ -32,7 +30,7 @@ const ProfileAvatar = ({ currentUser }) => {
       <ProfileAvatarTitle>Avatar</ProfileAvatarTitle>
       <UserAvatarAndUploadButton>
         <UserAvatar
-          style={{ backgroundImage: `url(${selectedFile})` }}
+          style={{ backgroundImage: `url(${photoURL})` }}
         ></UserAvatar>
         <FileInput
           id='upload-button'
@@ -51,4 +49,12 @@ const ProfileAvatar = ({ currentUser }) => {
   );
 };
 
-export default ProfileAvatar;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+  uploadAvatarStart: (userId, file) => dispatch(uploadAvatarStart(userId, file))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileAvatar);

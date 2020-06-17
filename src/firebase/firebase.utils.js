@@ -54,6 +54,51 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const getCurrenUser = () =>
+  new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+
+export const updateUserProfile = async (userId, profile) => {
+  const editedAt = new Date();
+
+  const userRef = firestore.doc(`users/${userId}`);
+
+  const snapshot = await userRef.get();
+
+  if (snapshot.exists) {
+    try {
+      await userRef.set(
+        {
+          ...profile,
+          editedAt
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.log('Error updating user profile.', error.message);
+    }
+  }
+
+  return userRef;
+};
+
+export const uploadUserAvatar = async (userId, file) => {
+  try {
+    const storageRef = storage.ref().child(`avatars/${userId}`);
+
+    const uploadTask = await storageRef.put(file);
+    const downloadURL = await uploadTask.ref.getDownloadURL();
+
+    return downloadURL;
+  } catch (error) {
+    console.log('Error uploading image.', error.message);
+  }
+};
+
 export const addMovieCollectionAndDocumentsToFirestore = async (
   collectionKey,
   objectsToAdd
@@ -167,14 +212,6 @@ export const convertMoviesSnapshotToMap = movies => {
     return accumulator;
   }, {});
 };
-
-export const getCurrenUser = () =>
-  new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged(userAuth => {
-      unsubscribe();
-      resolve(userAuth);
-    }, reject);
-  });
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import SearchBox from '../search-box/search-box.component';
 
-import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import AvatarDropdown from '../avatar-dropdown/avatar-dropdown.component';

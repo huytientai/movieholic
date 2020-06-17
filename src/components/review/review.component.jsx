@@ -9,6 +9,7 @@ import { deleteReviewStart } from '../../redux/review/review.actions';
 import ReviewEditor from '../review-editor/review-editor.component';
 
 import {
+  Avatar,
   Menu,
   MenuItem,
   IconButton,
@@ -22,7 +23,6 @@ import {
   ReviewContainer,
   ReviewHeader,
   AvatarAndAuthorAndPostedTime,
-  Avatar,
   AuthorAndPostedTime,
   Author,
   PostedTime,
@@ -68,7 +68,11 @@ const Review = ({
     <ReviewContainer>
       <ReviewHeader>
         <AvatarAndAuthorAndPostedTime>
-          <Avatar alt={displayName} src={photoURL} />
+          <Avatar
+            alt={displayName}
+            src={photoURL}
+            style={{ width: '2.8em', height: '2.8em' }}
+          />
           <AuthorAndPostedTime>
             <Author>{displayName}</Author>
             <PostedTime>

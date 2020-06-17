@@ -54,3 +54,32 @@ export const signUpFailure = error => ({
   type: UserActionTypes.SIGN_UP_FAILURE,
   payload: error
 });
+
+export const updateProfileStart = (userId, profile) => ({
+  type: UserActionTypes.UPDATE_PROFILE_START,
+  payload: { userId, profile }
+});
+
+export const updateProfileSuccess = profile => ({
+  type: UserActionTypes.UPDATE_PROFILE_SUCCESS,
+  payload: profile
+});
+
+export const updateProfileFailure = error => ({
+  type: UserActionTypes.UPDATE_PROFILE_FAILURE,
+  payload: error
+});
+
+export const uploadAvatarStart = (userId, file) => ({
+  type: UserActionTypes.UPLOAD_AVATAR_START,
+  payload: { userId, file }
+});
+
+export const uploadAvatarSuccess = () => ({
+  type: UserActionTypes.UPLOAD_AVATAR_SUCCESS
+});
+
+export const uploadAvatarFailure = error => ({
+  type: UserActionTypes.UPLOAD_AVATAR_FAILURE,
+  payload: error
+});

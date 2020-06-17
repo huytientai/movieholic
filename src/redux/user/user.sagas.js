@@ -6,7 +6,11 @@ import {
   signOutSuccess,
   signOutFailure,
   signUpSuccess,
-  signUpFailure
+  signUpFailure,
+  updateProfileSuccess,
+  updateProfileFailure,
+  uploadAvatarSuccess,
+  uploadAvatarFailure
 } from './user.actions';
 
 import {
@@ -14,7 +18,9 @@ import {
   facebookProvider,
   googleProvider,
   createUserProfileDocument,
-  getCurrenUser
+  getCurrenUser,
+  updateUserProfile,
+  uploadUserAvatar
 } from '../../firebase/firebase.utils';
 
 import UserActionTypes from './user.types';
@@ -97,6 +103,32 @@ export function* signInAfterSignUp({ payload: { user, additionalData } }) {
   yield getSnapshotFromUserAuth(user, additionalData);
 }
 
+export function* updateProfileStart({ payload: { userId, profile } }) {
+  try {
+    const userRef = yield call(updateUserProfile, userId, profile);
+    const userSnapshot = yield userRef.get();
+    yield put(
+      updateProfileSuccess({ id: userSnapshot.id, ...userSnapshot.data() })
+    );
+  } catch (error) {
+    yield put(updateProfileFailure(error));
+  }
+}
+
+export function* uploadAvatarStart({ payload: { userId, file } }) {
+  try {
+    const photoURL = yield uploadUserAvatar(userId, file);
+    yield put(uploadAvatarSuccess());
+    const userRef = yield call(updateUserProfile, userId, { photoURL });
+    const userSnapshot = yield userRef.get();
+    yield put(
+      updateProfileSuccess({ id: userSnapshot.id, ...userSnapshot.data() })
+    );
+  } catch (error) {
+    yield put(uploadAvatarFailure(error));
+  }
+}
+
 export function* onFacebookSignInStart() {
   yield takeLatest(UserActionTypes.FACEBOOK_SIGN_IN_START, signInWithFacebook);
 }
@@ -125,6 +157,14 @@ export function* onSignUpSuccess() {
   yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
+export function* onUpdateProfileStart() {
+  yield takeLatest(UserActionTypes.UPDATE_PROFILE_START, updateProfileStart);
+}
+
+export function* onUploadAvatarStart() {
+  yield takeLatest(UserActionTypes.UPLOAD_AVATAR_START, uploadAvatarStart);
+}
+
 export function* userSagas() {
   yield all([
     call(onFacebookSignInStart),
@@ -133,6 +173,8 @@ export function* userSagas() {
     call(onCheckUserSession),
     call(onSignOutStart),
     call(onSignUpStart),
-    call(onSignUpSuccess)
+    call(onSignUpSuccess),
+    call(onUpdateProfileStart),
+    call(onUploadAvatarStart)
   ]);
 }

@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import { updateProfileStart } from '../../redux/user/user.actions';
 
 import {
   TextField,
@@ -18,10 +21,11 @@ import {
   ButtonsGroupContainer
 } from './profile-input-form.styles';
 
-const ProfileInputForm = ({ currentUser }) => {
+const ProfileInputForm = ({ currentUser, updateProfileStart }) => {
   const [userInfo, setUserInfo] = useState(currentUser);
 
   const {
+    id,
     displayName,
     firstName,
     lastName,
@@ -32,6 +36,25 @@ const ProfileInputForm = ({ currentUser }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
+
+    updateProfileStart(id, {
+      displayName,
+      firstName,
+      lastName,
+      phoneNumber,
+      gender,
+      age
+    });
+
+    setUserInfo({
+      ...userInfo,
+      displayName: '',
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      gender: '',
+      age: 0
+    });
   };
 
   const handleChange = event => {
@@ -118,4 +141,9 @@ const ProfileInputForm = ({ currentUser }) => {
   );
 };
 
-export default ProfileInputForm;
+const mapDispatchToProps = dispatch => ({
+  updateProfileStart: (userId, profile) =>
+    dispatch(updateProfileStart(userId, profile))
+});
+
+export default connect(null, mapDispatchToProps)(ProfileInputForm);
