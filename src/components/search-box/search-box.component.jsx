@@ -1,71 +1,59 @@
-import React from "react";
-import { InputBase } from "@material-ui/core";
+import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import { Search } from "@material-ui/icons";
-import { useStyles } from "./search-box.styles";
-import "./search-box.styles.scss";
-import SearchDropdown from "../search-dropdown/search-dropdown.component";
-import { firestore } from "../../firebase/firebase.utils";
+import { fetchMoviesStart } from '../../redux/movie/movie.actions';
+import {
+  selectIsMoviesLoaded,
+  selectMoviesForPreview
+} from '../../redux/movie/movie.selectors';
 
-import { useRef, useEffect } from "react";
+import SearchDropdown from '../search-dropdown/search-dropdown.component';
 
-export default function SearchBox() {
+import { InputBase } from '@material-ui/core';
+import { Search } from '@material-ui/icons';
+
+import { useStyles } from './search-box.styles';
+import './search-box.styles.scss';
+
+const SearchBox = ({ isLoaded, movies, fetchMoviesStart }) => {
+  useEffect(() => {
+    if (!isLoaded) fetchMoviesStart();
+  });
+
   const classes = useStyles();
 
-  const [results, setResults] = React.useState([]);
-
-  const [show, setShow] = React.useState(false);
-
-  function handleChange(event) {
-    if (!event.target.value) {
-      setResults([]);
-      return false;
-    }
-    let input = event.target.value;
-
-    let array = [];
-
-    firestore
-      .collection("movies")
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          array.push(doc.data());
-        });
-
-        array = array
-          .map((item) => {
-            if (item.title.toLowerCase().search(input.toLowerCase()) !== -1)
-              return item;
-            else return null;
-          })
-          .filter(Boolean)
-          .slice(0, 10);
-
-        setResults(array);
-      });
-
-    setShow(true);
-  }
-
-  function useOutside(ref) {
-    useEffect(() => {
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setShow(false);
-        }
-      }
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        // Unbind the event listener on clean up
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
+  const [input, setInput] = useState('');
+  const [isShowed, setIsShowed] = useState(false);
 
   const wrapperRef = useRef(null);
+
+  const handleChange = event => {
+    setInput(event.target.value);
+    setIsShowed(true);
+  };
+
+  const useOutside = ref => {
+    useEffect(() => {
+      const handleClickOutside = event => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsShowed(false);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [ref]);
+  };
+
   useOutside(wrapperRef);
+
+  const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(input.toLowerCase())
+  );
 
   return (
     <div ref={wrapperRef}>
@@ -74,21 +62,26 @@ export default function SearchBox() {
           <Search />
         </div>
         <InputBase
-          placeholder="Search movies here…"
+          placeholder='Search movies here…'
           classes={{
             root: classes.inputRoot,
-            input: classes.inputInput,
+            input: classes.inputInput
           }}
-          inputProps={{ "aria-label": "search" }}
+          inputProps={{ 'aria-label': 'search' }}
           onChange={handleChange}
+          value={input}
         />
         <div className={classes.dropdownLists}>
-          {show
-            ? results.map((result, index) => (
+          {isShowed && input.length !== 0
+            ? filteredMovies.map((filteredMovie, index) => (
                 <SearchDropdown
-                  key={index}
-                  {...result}
                   className={classes.inputRoot}
+                  key={index}
+                  {...filteredMovie}
+                  onSelect={() => {
+                    setIsShowed(false);
+                    setInput('');
+                  }}
                 />
               ))
             : null}
@@ -96,4 +89,15 @@ export default function SearchBox() {
       </div>
     </div>
   );
-}
+};
+
+const mapStateToProps = createStructuredSelector({
+  isLoaded: selectIsMoviesLoaded,
+  movies: selectMoviesForPreview
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchMoviesStart: () => dispatch(fetchMoviesStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);
