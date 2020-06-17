@@ -1,15 +1,22 @@
-import React from "react";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-import "./search-dropdown.styles.scss";
+import './search-dropdown.styles.scss';
 
-function goto(id) {
-  window.location.href = `/movies/${id}`;
-}
+const SearchDropdown = ({ id, title, onSelect }) => {
+  const history = useHistory();
 
-const SearchDropdown = (item) => (
-  <div class="autocomplete-item" onClick={() => goto(item.id)}>
-    {item.title}
-  </div>
-);
+  return (
+    <div
+      className='autocomplete-item'
+      onClick={() => {
+        history.push(`/movies/${id}`);
+        onSelect();
+      }}
+    >
+      {title}
+    </div>
+  );
+};
 
 export default SearchDropdown;
