@@ -21,3 +21,21 @@ export const selectIsReviewsLoaded = createSelector(
   [selectReview],
   review => !!review.reviews
 );
+
+export const selectUsersReview = userIds =>
+  createSelector([selectReviews], reviews =>
+    reviews
+      ? reviews.filter(review =>
+          userIds.includes(review.userId) ? review : null
+        )
+      : null
+  );
+
+export const selectOtherUsersReview = userIds =>
+  createSelector([selectReviews], reviews =>
+    reviews
+      ? reviews.filter(review =>
+          !userIds.includes(review.userId) ? review : null
+        )
+      : null
+  );

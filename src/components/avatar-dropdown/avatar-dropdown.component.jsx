@@ -31,7 +31,6 @@ const AvatarDropdown = ({ currentUser, signOutStart }) => {
           <Avatar alt={currentUser.displayName} src={currentUser.photoURL} />
         ) : null}
       </IconButton>
-
       <Menu anchorEl={anchorEl} keepMounted open={open} onClose={handleClose}>
         <MenuItem
           onClick={() => {

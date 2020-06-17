@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const MovieDetailsSectionContainer = styled.div`
-  height: 40vw;
+  height: 525px;
+  margin-bottom: 30px;
   overflow: hidden;
   display: flex;
   flex-direction: column;

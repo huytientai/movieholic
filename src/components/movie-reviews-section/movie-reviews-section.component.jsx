@@ -1,15 +1,15 @@
 import React from 'react';
 
-import ReviewEditor from '../../components/review-editor/review-editor.component';
-import ReviewListContainer from '../../components/review-list/review-list.container';
+import CurrentUserReview from '../../components/current-user-review/current-user-review.component';
+import OthersReviews from '../../components/others-reviews/others-reviews.component';
 
-import './movie-reviews-section.styles.scss';
+import { MovieReviewsSectionContainer } from './movie-reviews-section.styles';
 
 const MovieReviewsSection = () => (
-  <div>
-    <ReviewEditor />
-    <ReviewListContainer />
-  </div>
+  <MovieReviewsSectionContainer>
+    <CurrentUserReview />
+    <OthersReviews />
+  </MovieReviewsSectionContainer>
 );
 
 export default MovieReviewsSection;

@@ -30,6 +30,37 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
         errorMessage: action.payload
       };
 
+    case ReviewActionTypes.CREATE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        reviews: [...state.reviews, action.payload]
+      };
+
+    case ReviewActionTypes.UPDATE_REVIEW_SUCCESS:
+      const { id } = action.payload;
+
+      return {
+        ...state,
+        reviews: [
+          ...state.reviews.filter(review => review.id !== id),
+          action.payload
+        ]
+      };
+
+    case ReviewActionTypes.DELETE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        reviews: state.reviews.filter(review => review.id !== action.payload)
+      };
+
+    case ReviewActionTypes.CREATE_REVIEW_FAILURE:
+    case ReviewActionTypes.UPDATE_REVIEW_FAILURE:
+    case ReviewActionTypes.DELETE_REVIEW_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload
+      };
+
     default:
       return state;
   }

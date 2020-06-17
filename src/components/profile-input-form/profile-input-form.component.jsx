@@ -81,7 +81,6 @@ const ProfileInputForm = ({ currentUser }) => {
             margin='normal'
           />
         </FirstNameAndLastNameInput>
-
         <TextField
           name='phoneNumber'
           type='text'

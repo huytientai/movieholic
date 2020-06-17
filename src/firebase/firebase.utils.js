@@ -20,9 +20,9 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
-  const snapShot = await userRef.get();
+  const snapshot = await userRef.get();
 
-  if (!snapShot.exists) {
+  if (!snapshot.exists) {
     const { displayName, email, photoURL } = userAuth;
     const isAdmin = false;
     const firstName = '';
@@ -85,8 +85,8 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
       displayName: 'Long Nguyễn',
       photoURL: 'https://graph.facebook.com/1632165466941231/picture',
       comment: 'This is an awesome movie !',
-      ratings: 8.5,
-      spoil: false,
+      rating: 8.5,
+      isSpoiler: false,
       createdAt: new Date(),
       editedAt: new Date()
     });
@@ -117,22 +117,25 @@ export const createReview = async (movieId, review) => {
   } catch (error) {
     console.log('Error creating review.', error.message);
   }
+
+  return newReviewRef;
 };
 
 export const updateReview = async (movieId, review) => {
-  const { id, comment, ratings } = review;
+  const { id, comment, rating } = review;
+  const editedAt = new Date();
 
   const reviewRef = firestore.doc(`movieReviews/${movieId}/reviews/${id}`);
 
-  const snapShot = await reviewRef.get();
+  const snapshot = await reviewRef.get();
 
-  if (snapShot.exists) {
+  if (snapshot.exists) {
     try {
       await reviewRef.set(
         {
           comment,
-          ratings,
-          editedAt: new Date()
+          rating,
+          editedAt
         },
         { merge: true }
       );
@@ -140,6 +143,8 @@ export const updateReview = async (movieId, review) => {
       console.log('Error editing review.', error.message);
     }
   }
+
+  return reviewRef;
 };
 
 export const deleteReview = async (movieId, reviewId) => {
@@ -150,7 +155,7 @@ export const deleteReview = async (movieId, reviewId) => {
   try {
     await reviewRef.delete();
   } catch (error) {
-    console.log('Error editing review.', error.message);
+    console.log('Error deleting review.', error.message);
   }
 };
 
