@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectOneMovie } from '../../redux/movie/movie.selectors';
-import { selectIsMoviesLoaded } from '../../redux/movie/movie.selectors';
-import { fetchMoviesStart } from '../../redux/movie/movie.actions';
 
 import { baseUrl } from '../../data/movie.urls';
 
@@ -28,9 +26,7 @@ import {
   ProductionCompanies
 } from './movie-details-section.styles';
 
-const MovieDetailsSection = ({ isLoaded, fetchMoviesStart, movie }) => {
-  if (!isLoaded) fetchMoviesStart();
-
+const MovieDetailsSection = ({ movie }) => {
   if (movie) {
     const {
       backdrop_path,
@@ -98,14 +94,7 @@ const MovieDetailsSection = ({ isLoaded, fetchMoviesStart, movie }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLoaded: selectIsMoviesLoaded,
   movie: (state, props) => selectOneMovie(props.match.params.movieId)(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchMoviesStart: () => dispatch(fetchMoviesStart())
-});
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(MovieDetailsSection)
-);
+export default withRouter(connect(mapStateToProps)(MovieDetailsSection));

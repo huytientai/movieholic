@@ -1,22 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { fetchMoviesStart } from '../../redux/movie/movie.actions';
-import {
-  selectIsMoviesLoaded,
-  selectMoviesForPreview
-} from '../../redux/movie/movie.selectors';
+import { selectMoviesForPreview } from '../../redux/movie/movie.selectors';
 
 import MovieCard from '../movie-card/movie-card.component';
 
 import './movie-card-list.styles.scss';
 
-const MovieCardList = ({ isLoaded, movies, fetchMoviesStart }) => {
-  useEffect(() => {
-    if (!isLoaded) fetchMoviesStart();
-  });
-
+const MovieCardList = ({ movies }) => {
   return (
     <div className='movie-card-list'>
       {movies.map(({ id, ...otherCollectionProps }) => (
@@ -27,12 +19,7 @@ const MovieCardList = ({ isLoaded, movies, fetchMoviesStart }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLoaded: selectIsMoviesLoaded,
   movies: selectMoviesForPreview
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchMoviesStart: () => dispatch(fetchMoviesStart())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieCardList);
+export default connect(mapStateToProps)(MovieCardList);
