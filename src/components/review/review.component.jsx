@@ -78,7 +78,7 @@ const Review = ({
           <AuthorAndPostedTime>
             <Author>{displayName}</Author>
             <PostedTime>
-              Posted at {Date(createdAt.seconds).toString().slice(0, 24)}
+              Posted at {createdAt.toDate().toString().slice(0, 24)}
             </PostedTime>
           </AuthorAndPostedTime>
         </AvatarAndAuthorAndPostedTime>
