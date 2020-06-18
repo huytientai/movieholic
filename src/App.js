@@ -50,7 +50,15 @@ const App = ({ checkUserSession, currentUser }) => {
           exact
           path='/administration'
           render={() =>
-            currentUser ? <AdministrationPage /> : <Redirect to='/signin' />
+            currentUser ? (
+              currentUser.isAdmin ? (
+                <AdministrationPage />
+              ) : (
+                <Redirect to='/' />
+              )
+            ) : (
+              <Redirect to='/signin' />
+            )
           }
         />
       </Switch>
