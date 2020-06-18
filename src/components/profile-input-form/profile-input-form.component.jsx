@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { updateProfileStart } from '../../redux/user/user.actions';
 
 import {
@@ -141,9 +143,13 @@ const ProfileInputForm = ({ currentUser, updateProfileStart }) => {
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
 const mapDispatchToProps = dispatch => ({
   updateProfileStart: (userId, profile) =>
     dispatch(updateProfileStart(userId, profile))
 });
 
-export default connect(null, mapDispatchToProps)(ProfileInputForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileInputForm);

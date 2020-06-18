@@ -19,7 +19,7 @@ import {
 const ProfileAvatar = ({ currentUser, uploadAvatarStart }) => {
   const { id, photoURL } = currentUser;
 
-  const handleUploadClick = event => {
+  const handleUploadClick = async event => {
     const file = event.target.files[0];
 
     uploadAvatarStart(id, file);
