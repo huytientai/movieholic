@@ -12,10 +12,13 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  Button,
   IconButton,
   Dialog,
   DialogTitle,
-  DialogContent
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@material-ui/core';
 import { Star, MoreVert } from '@material-ui/icons';
 
@@ -51,6 +54,7 @@ const Review = ({
   const currentUserId = currentUser ? currentUser.id : '';
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const { movieId } = useParams();
 
@@ -61,8 +65,6 @@ const Review = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const toggleEditing = () => setIsEditing(!isEditing);
 
   return (
     <ReviewContainer>
@@ -93,7 +95,7 @@ const Review = ({
             >
               <MenuItem
                 onClick={() => {
-                  toggleEditing();
+                  setIsEditing(true);
                   handleClose();
                 }}
               >
@@ -101,7 +103,7 @@ const Review = ({
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  deleteReviewStart(movieId, id);
+                  setIsDeleting(true);
                   handleClose();
                 }}
               >
@@ -111,35 +113,53 @@ const Review = ({
           </ReviewOptions>
         ) : null}
       </ReviewHeader>
-      {isEditing ? (
-        <Dialog
-          open={isEditing}
-          onClose={toggleEditing}
-          fullWidth
-          maxWidth='sm'
-        >
-          <DialogTitle>Edit review</DialogTitle>
-          <DialogContent dividers>
-            <ReviewEditor
-              width='100%'
-              currentUser={currentUser}
-              currentUsersReview={{ id, comment, rating }}
-              isEditing={isEditing}
-              onFinish={toggleEditing}
-            />
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <ReviewContent>
-          <Rating>
-            <Star
-              style={{ color: 'yellow', fontSize: '1.8vw', padding: '0 0.2em' }}
-            />
-            {rating}
-          </Rating>
-          <Comment>{comment}</Comment>
-        </ReviewContent>
-      )}
+      <ReviewContent>
+        <Rating>
+          <Star
+            style={{ color: 'yellow', fontSize: '1.8vw', padding: '0 0.2em' }}
+          />
+          {rating}
+        </Rating>
+        <Comment>{comment}</Comment>
+      </ReviewContent>
+      <Dialog
+        open={isEditing}
+        onClose={() => setIsEditing(false)}
+        fullWidth
+        maxWidth='sm'
+      >
+        <DialogTitle>Edit your review</DialogTitle>
+        <DialogContent dividers>
+          <ReviewEditor
+            width='100%'
+            currentUsersReview={{ id, comment, rating }}
+            isEditing={isEditing}
+            onFinish={() => setIsEditing(false)}
+          />
+        </DialogContent>
+      </Dialog>
+      <Dialog open={isDeleting} onClose={() => setIsDeleting(false)}>
+        <DialogTitle>Delete your review</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>
+            Doing so will delete your review for this movie. This operation can
+            not be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsDeleting(false)} autoFocus>
+            CANCEL
+          </Button>
+          <Button
+            onClick={() => deleteReviewStart(movieId, id)}
+            color='secondary'
+            variant='contained'
+            disableElevation
+          >
+            DELETE
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ReviewContainer>
   );
 };
