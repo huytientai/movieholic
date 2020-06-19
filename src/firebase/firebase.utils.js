@@ -88,7 +88,9 @@ export const updateUserProfile = async (userId, profile) => {
 
 export const uploadUserAvatar = async (userId, file) => {
   try {
-    const storageRef = storage.ref().child(`avatars/${userId}`);
+    const storageRef = storage
+      .ref()
+      .child(`avatars/${userId}.${file.name.split('.').slice(1).pop() || ''}`);
 
     const uploadTask = await storageRef.put(file);
     const downloadURL = await uploadTask.ref.getDownloadURL();

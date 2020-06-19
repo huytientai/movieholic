@@ -117,7 +117,7 @@ export function* updateProfileStart({ payload: { userId, profile } }) {
 
 export function* uploadAvatarStart({ payload: { userId, file } }) {
   try {
-    const photoURL = yield uploadUserAvatar(userId, file);
+    const photoURL = yield call(uploadUserAvatar, userId, file);
     yield put(uploadAvatarSuccess());
     const userRef = yield call(updateUserProfile, userId, { photoURL });
     const userSnapshot = yield userRef.get();
