@@ -177,7 +177,9 @@ const getReviewers = reviews =>
 
       return { id: snapshot.id, ...snapshot.data() };
     })
-  ).then(reviewers => reviewers);
+  )
+    .then(reviewers => reviewers)
+    .catch(error => console.log(error));
 
 export const createReview = async (movieId, review) => {
   const newReviewRef = firestore
