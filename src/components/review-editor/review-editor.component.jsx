@@ -94,7 +94,6 @@ const ReviewEditor = ({
               name='rating'
               value={rating}
               max={10}
-              precision={0.5}
               emptyIcon={<StarBorder fontSize='inherit' />}
               onChange={handleChange}
               onChangeActive={(event, newHover) => {

@@ -130,7 +130,7 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
     batch.set(newReviewDocRef, {
       userId: 'JqQIlnctKDMumwduNy9mnq4lhju2',
       comment: 'This is an awesome movie !',
-      rating: 8.5,
+      rating: 8,
       isSpoiler: false,
       createdAt: new Date(),
       editedAt: new Date()
