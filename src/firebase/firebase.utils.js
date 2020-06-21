@@ -129,10 +129,8 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
 
     batch.set(newReviewDocRef, {
       userId: 'JqQIlnctKDMumwduNy9mnq4lhju2',
-      displayName: 'Long Nguyễn',
-      photoURL: 'https://graph.facebook.com/1632165466941231/picture',
       comment: 'This is an awesome movie !',
-      rating: 8.5,
+      rating: 8,
       isSpoiler: false,
       createdAt: new Date(),
       editedAt: new Date()
@@ -145,8 +143,43 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
 export const getMovieCollections = snapshot =>
   snapshot.docs.map(doc => doc.data());
 
-export const getReviewCollections = snapshot =>
-  snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+export const convertMoviesSnapshotToMap = movies => {
+  const transformedCollections = movies.docs.map(doc => doc.data());
+
+  return transformedCollections.reduce((accumulator, movie) => {
+    accumulator[movie.id] = movie;
+    return accumulator;
+  }, {});
+};
+
+export const getReviewCollections = async snapshot => {
+  const reviews = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+  const reviewers = await getReviewers(reviews);
+
+  const transformedReviewers = reviewers.reduce((accumulator, reviewer) => {
+    accumulator[reviewer.id] = reviewer;
+    return accumulator;
+  }, {});
+
+  return reviews.map(review => ({
+    ...review,
+    displayName: transformedReviewers[review.userId].displayName,
+    photoURL: transformedReviewers[review.userId].photoURL
+  }));
+};
+
+const getReviewers = reviews =>
+  Promise.all(
+    reviews.map(async review => {
+      const reviewerRef = firestore.doc(`users/${review.userId}`);
+      const snapshot = await reviewerRef.get();
+
+      return { id: snapshot.id, ...snapshot.data() };
+    })
+  )
+    .then(reviewers => reviewers)
+    .catch(error => console.log(error));
 
 export const createReview = async (movieId, review) => {
   const newReviewRef = firestore
@@ -204,15 +237,6 @@ export const deleteReview = async (movieId, reviewId) => {
   } catch (error) {
     console.log('Error deleting review.', error.message);
   }
-};
-
-export const convertMoviesSnapshotToMap = movies => {
-  const transformedCollections = movies.docs.map(doc => doc.data());
-
-  return transformedCollections.reduce((accumulator, movie) => {
-    accumulator[movie.id] = movie;
-    return accumulator;
-  }, {});
 };
 
 export const auth = firebase.auth();

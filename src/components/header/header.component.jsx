@@ -28,13 +28,9 @@ const Header = ({ currentUser }) => {
       </Link>
       <SearchBox />
       <OptionsContainer>
-        {currentUser ? (
-          currentUser.isAdmin ? (
-            <IconButton onClick={() => history.push('/administration')}>
-              <Assessment style={{ fontSize: 27 }} />
-            </IconButton>
-          ) : null
-        ) : null}
+        <IconButton onClick={() => history.push('/administration')}>
+          <Assessment style={{ fontSize: 27 }} />
+        </IconButton>
         {currentUser ? (
           <AvatarDropdown />
         ) : (
